@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy from CSVtoSQL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -66,19 +66,7 @@
 				"outputs": [
 					{
 						"referenceName": "DS_SQL_Target",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaname": "dbo",
-							"tablename": "customer",
-							"servername": {
-								"value": "@pipeline().parameters.servername",
-								"type": "Expression"
-							},
-							"dbname": {
-								"value": "@pipeline().parameters.dbname",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				]
 			}
