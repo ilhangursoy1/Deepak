@@ -1,0 +1,126 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DFIG1"
+		},
+		"LS_AzureSqlTarget_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlTarget'"
+		},
+		"LS_FileSystem_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_FileSystem'"
+		},
+		"LS_SQLIG1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SQLIG1'"
+		},
+		"LS_SqlIG2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SqlIG2'"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://igkeyvailt1.vault.azure.net/"
+		},
+		"LS_CSV_IG1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccountig1.dfs.core.windows.net/"
+		},
+		"LS_FileSystem_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\1Azure\\AzureMaterials"
+		},
+		"LS_FileSystem_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "hamsi"
+		},
+		"LS_csv_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccountig1.dfs.core.windows.net/"
+		},
+		"testtrigger_properties_pipeline2_parameters_id": {
+			"type": "int",
+			"defaultValue": 3
+		},
+		"testtrigger_properties_pipeline2_parameters_servername": {
+			"type": "string",
+			"defaultValue": "ilhan.database.windows.net"
+		},
+		"testtrigger_properties_pipeline2_parameters_dbname": {
+			"type": "string",
+			"defaultValue": "ilhan"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "DFIG1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_AzureSqlTarget_connectionString": {
+						"value": "[parameters('LS_AzureSqlTarget_connectionString')]"
+					},
+					"LS_SQLIG1_connectionString": {
+						"value": "[parameters('LS_SQLIG1_connectionString')]"
+					},
+					"LS_SqlIG2_connectionString": {
+						"value": "[parameters('LS_SqlIG2_connectionString')]"
+					},
+					"LS_FileSystem_password": {
+						"value": "[parameters('LS_FileSystem_password')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"LS_CSV_IG1_properties_typeProperties_url": {
+						"value": "[parameters('LS_CSV_IG1_properties_typeProperties_url')]"
+					},
+					"LS_csv_properties_typeProperties_url": {
+						"value": "[parameters('LS_csv_properties_typeProperties_url')]"
+					},
+					"LS_FileSystem_properties_typeProperties_host": {
+						"value": "[parameters('LS_FileSystem_properties_typeProperties_host')]"
+					},
+					"LS_FileSystem_properties_typeProperties_userId": {
+						"value": "[parameters('LS_FileSystem_properties_typeProperties_userId')]"
+					},
+					"testtrigger_properties_pipeline2_parameters_id": {
+						"value": "[parameters('testtrigger_properties_pipeline2_parameters_id')]"
+					},
+					"testtrigger_properties_pipeline2_parameters_servername": {
+						"value": "[parameters('testtrigger_properties_pipeline2_parameters_servername')]"
+					},
+					"testtrigger_properties_pipeline2_parameters_dbname": {
+						"value": "[parameters('testtrigger_properties_pipeline2_parameters_dbname')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
