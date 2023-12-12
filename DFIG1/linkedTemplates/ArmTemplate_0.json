@@ -668,7 +668,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "CopyfromCSVtoSQL",
+						"name": "CopyfromCSVtoSQL1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
