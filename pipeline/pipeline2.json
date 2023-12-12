@@ -1,0 +1,179 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select 1 as id",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_SQL_Target",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "x",
+							"tablename": "y",
+							"servername": {
+								"value": "@pipeline().parameters.servername",
+								"type": "Expression"
+							},
+							"dbname": {
+								"value": "@pipeline().parameters.dbname",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(pipeline().parameters.id,activity('Lookup1').output.firstRow.id)",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": false,
+										"wildcardFolderPath": "customer",
+										"wildcardFileName": "*.txt",
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "id",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "ID",
+												"type": "Int32",
+												"physicalType": "int"
+											}
+										},
+										{
+											"source": {
+												"name": "name",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "name",
+												"type": "String",
+												"physicalType": "varchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_csv",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "input",
+										"folderpath": "customer",
+										"filename": "xx"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_SQL_Target",
+									"type": "DatasetReference",
+									"parameters": {
+										"schemaname": "dbo",
+										"tablename": "cust",
+										"servername": {
+											"value": "@pipeline().parameters.servername",
+											"type": "Expression"
+										},
+										"dbname": {
+											"value": "@pipeline().parameters.dbname",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"id": {
+				"type": "int"
+			},
+			"servername": {
+				"type": "string"
+			},
+			"dbname": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Deepak"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-12-08T12:26:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

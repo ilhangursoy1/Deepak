@@ -1,0 +1,9 @@
+{
+	"name": "DFIG1",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "de8d535c-2111-494d-bb9f-f534b27a4a10",
+		"tenantId": "54f2780b-4ab3-40c4-87f4-1a5ad22345e8"
+	}
+}

@@ -1,0 +1,115 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.containerpp",
+								"type": "Expression"
+							},
+							"folderpath": {
+								"value": "@pipeline().parameters.filepathpp",
+								"type": "Expression"
+							},
+							"filename": {
+								"value": "@pipeline().parameters.filenamepp",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SQL_Target",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "dbo",
+							"tablename": "customer",
+							"servername": {
+								"value": "@pipeline().parameters.servername",
+								"type": "Expression"
+							},
+							"dbname": {
+								"value": "@pipeline().parameters.dbname",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"containerpp": {
+				"type": "string",
+				"defaultValue": "input"
+			},
+			"filepathpp": {
+				"type": "string",
+				"defaultValue": "customer"
+			},
+			"filenamepp": {
+				"type": "string",
+				"defaultValue": "customer.csv"
+			},
+			"servername": {
+				"type": "string",
+				"defaultValue": "ilhan.database.windows.net"
+			},
+			"dbname": {
+				"type": "string",
+				"defaultValue": "ilhan"
+			}
+		},
+		"folder": {
+			"name": "Deepak"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-12-08T12:26:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

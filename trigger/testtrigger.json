@@ -1,0 +1,29 @@
+{
+	"name": "testtrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline2",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"id": 3,
+					"servername": "ilhan.database.windows.net",
+					"dbname": "ilhan"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2023-12-08T12:28:00",
+				"timeZone": "GMT Standard Time"
+			}
+		}
+	}
+}

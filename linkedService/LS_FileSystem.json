@@ -1,0 +1,17 @@
+{
+	"name": "LS_FileSystem",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\1Azure\\AzureMaterials",
+			"userId": "hamsi",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjZTgxNDE5Zi1lODQ3LTQwMGQtYjM1Yy1mMmM3NTQ0M2QwZGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedIG1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
