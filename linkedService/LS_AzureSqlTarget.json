@@ -3,10 +3,12 @@
 	"properties": {
 		"parameters": {
 			"servername": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ilhan"
 			},
 			"dbname": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ilhan"
 			}
 		},
 		"annotations": [],
