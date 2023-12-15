@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyfromCSVtoSQL6",
+				"name": "CopyfromCSVtoSQL4",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -109,7 +109,7 @@
 			"name": "Deepak"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-12-08T12:26:50Z"
+		"lastPublishTime": "2023-12-12T12:23:50Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
