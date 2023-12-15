@@ -4,7 +4,7 @@
 		"parameters": {
 			"servername": {
 				"type": "string",
-				"defaultValue": "ilhan"
+				"defaultValue": "ilhan.database.windows.net"
 			},
 			"dbname": {
 				"type": "string",
