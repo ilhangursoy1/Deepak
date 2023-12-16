@@ -1,0 +1,48 @@
+{
+	"name": "API",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://management.azure.com/subscriptions/a4d974a9-8246-464b-b0b1-04f2fbbc10ce/resourceGroups/RGIlhan1/providers/Microsoft.Sql/servers/ilhan.database.windows.net/databases/ilhan/pause?api-version=2021-11-01",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"authentication": {
+						"resource": "https://management.azure.com",
+						"credential": {
+							"referenceName": "SqlApi",
+							"type": "CredentialReference"
+						},
+						"userTenant": "54f2780b-4ab3-40c4-87f4-1a5ad22345e8",
+						"username": "01148848-4f7a-455c-af82-7919ca45616e",
+						"password": {
+							"type": "AzureKeyVaultSecret",
+							"store": {
+								"referenceName": "AzureKeyVault1",
+								"type": "LinkedServiceReference"
+							},
+							"secretName": "SqlApi"
+						}
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Deepak"
+		},
+		"annotations": []
+	}
+}
