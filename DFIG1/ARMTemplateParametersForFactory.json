@@ -6,7 +6,7 @@
 			"value": "DFIG1"
 		},
 		"LS_AzureSqlTarget_connectionString": {
-			"value": ""
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().servername};Initial Catalog=@{linkedService().dbname};User ID=ilhan"
 		},
 		"LS_FileSystem_password": {
 			"value": ""

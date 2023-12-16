@@ -9,7 +9,8 @@
 		},
 		"LS_AzureSqlTarget_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlTarget'"
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlTarget'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().servername};Initial Catalog=@{linkedService().dbname};User ID=ilhan"
 		},
 		"LS_FileSystem_password": {
 			"type": "secureString",
@@ -445,7 +446,7 @@
 					"name": "Deepak"
 				},
 				"annotations": [],
-				"lastPublishTime": "2023-12-08T12:26:50Z"
+				"lastPublishTime": "2023-12-12T12:23:50Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_csv')]",
@@ -870,19 +871,31 @@
 			"properties": {
 				"parameters": {
 					"servername": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "ilhan.database.windows.net"
 					},
 					"dbname": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "ilhan"
 					}
 				},
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"connectionString": "[parameters('LS_AzureSqlTarget_connectionString')]"
+					"connectionString": "[parameters('LS_AzureSqlTarget_connectionString')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "SQLPassIlhanP"
+					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LS_CSV_IG1')]",
@@ -1004,6 +1017,97 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntimeSelfHosted2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/API')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://management.azure.com/subscriptions/a4d974a9-8246-464b-b0b1-04f2fbbc10ce/resourceGroups/RGIlhan1/providers/Microsoft.Sql/servers/ilhan.database.windows.net/databases/ilhan/pause?api-version=2021-11-01",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {},
+							"authentication": {
+								"resource": "https://management.azure.com",
+								"credential": {
+									"referenceName": "SqlApi",
+									"type": "CredentialReference"
+								},
+								"userTenant": "54f2780b-4ab3-40c4-87f4-1a5ad22345e8",
+								"username": "01148848-4f7a-455c-af82-7919ca45616e",
+								"password": {
+									"type": "AzureKeyVaultSecret",
+									"store": {
+										"referenceName": "AzureKeyVault1",
+										"type": "LinkedServiceReference"
+									},
+									"secretName": "SqlApi"
+								}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Deepak"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/credentials/SqlApi')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlApi')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ServicePrincipal",
+				"typeProperties": {
+					"tenant": "54f2780b-4ab3-40c4-87f4-1a5ad22345e8",
+					"servicePrincipalId": "6c61c7ab-00a0-49c9-8fa0-1a943260def9",
+					"servicePrincipalKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "SqlApi"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
 		}
 	]
 }
