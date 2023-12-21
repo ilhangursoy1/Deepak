@@ -73,8 +73,10 @@
 				"          comm as string,",
 				"          depno as string",
 				"     ),",
+				"     partitionFileNames:['join,csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
