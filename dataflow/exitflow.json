@@ -56,7 +56,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
 				"source1, source2 exists(source1@depno == source2@depno,",
-				"     negate:false,",
+				"     negate:true,",
 				"     broadcast: 'auto')~> exists1",
 				"exists1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
