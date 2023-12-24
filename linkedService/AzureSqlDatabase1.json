@@ -4,10 +4,12 @@
 	"properties": {
 		"parameters": {
 			"username": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "ilhan"
 			},
 			"password": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "Sarahheuser1!"
 			}
 		},
 		"annotations": [],
